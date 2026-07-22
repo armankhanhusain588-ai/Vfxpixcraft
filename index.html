@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VFX Pix Craft — Arman Husain</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #0b0d15;
+      color: #f0f4ff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #141824;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #7b4dff;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #7b4dff88;
+    }
+
+    /* ----- NEON GLOW UTILITY ----- */
+    .glow-text {
+      text-shadow: 0 0 12px #7b4dffaa, 0 0 40px #7b4dff55;
+    }
+    .glow-box {
+      box-shadow: 0 0 30px #7b4dff33, 0 0 10px #7b4dff22;
+      transition: 0.4s;
+    }
+    .glow-box:hover {
+      box-shadow: 0 0 60px #7b4dff66, 0 0 20px #7b4dff44;
+    }
+
+    /* ----- NAVIGATION (same for both) ----- */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(11, 13, 21, 0.75);
+      backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid #ffffff0a;
+      padding: 0.8rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-logo img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #7b4dff;
+      box-shadow: 0 0 30px #7b4dff55;
+      transition: 0.3s;
+    }
+    .nav-logo img:hover {
+      transform: scale(1.08) rotate(-3deg);
+      box-shadow: 0 0 60px #7b4dffaa;
+    }
+
+    .nav-logo span {
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #b08aff, #7b4dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #c8d0e6;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      position: relative;
+      transition: 0.3s;
+      padding: 4px 0;
+      letter-spacing: 0.3px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2.5px;
+      background: linear-gradient(90deg, #b08aff, #7b4dff);
+      border-radius: 4px;
+      transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 0 18px #7b4dffaa;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links .cert-link {
+      background: linear-gradient(135deg, #7b4dff22, #b08aff22);
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid #7b4dff55;
+      backdrop-filter: blur(4px);
+      transition: 0.3s;
+    }
+    .nav-links .cert-link:hover {
+      background: #7b4dff33;
+      border-color: #b08aff;
+      box-shadow: 0 0 40px #7b4dff44;
+      transform: scale(1.02);
+    }
+
+    /* ----- SECTIONS ----- */
+    .section {
+      padding: 4rem 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      background: linear-gradient(135deg, #f0f4ff, #b08aff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      letter-spacing: -1px;
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      width: 60%;
+      height: 4px;
+      background: linear-gradient(90deg, #7b4dff, #b08aff, transparent);
+      border-radius: 6px;
+    }
+
+    /* ============================================================ */
+    /* WEBSITE 1 — INTRO + CERTIFICATE (poster 2 vali)              */
+    /* ============================================================ */
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 3rem;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .intro-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .intro-img img {
+      width: 100%;
+      max-width: 380px;
+      border-radius: 32px;
+      border: 2px solid #7b4dff88;
+      box-shadow: 0 0 70px #7b4dff44, 0 20px 60px #00000077;
+      transition: 0.5s;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+    }
+    .intro-img img:hover {
+      transform: scale(1.02) rotate(1deg);
+      box-shadow: 0 0 120px #7b4dff77, 0 20px 80px #000000aa;
+    }
+
+    .intro-text h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+    .intro-text h1 .highlight {
+      background: linear-gradient(135deg, #b08aff, #7b4dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px #7b4dff66;
+    }
+    .intro-text .tagline {
+      font-size: 1.4rem;
+      color: #b08aff;
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .intro-text p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #c8d0e6;
+      max-width: 520px;
+      margin-bottom: 1.8rem;
+    }
+    .intro-text .btn-glow {
+      display: inline-block;
+      padding: 12px 36px;
+      background: linear-gradient(135deg, #7b4dff, #b08aff);
+      border: none;
+      border-radius: 60px;
+      font-weight: 600;
+      color: #fff;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 0 40px #7b4dff66;
+      transition: 0.3s;
+      letter-spacing: 0.5px;
+    }
+    .intro-text .btn-glow:hover {
+      transform: scale(1.05) translateY(-4px);
+      box-shadow: 0 0 80px #7b4dffaa, 0 10px 40px #00000055;
+    }
+
+    /* certificate section */
+    .cert-section {
+      margin-top: 4rem;
+      padding: 3rem 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 48px;
+      border: 1px solid #ffffff0a;
+      backdrop-filter: blur(4px);
+      transition: 0.5s;
+    }
+
+    .cert-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cert-img {
+      flex: 1 1 320px;
+      max-width: 500px;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 2px solid #7b4dff66;
+      box-shadow: 0 0 60px #7b4dff33;
+      transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .cert-img img {
+      width: 100%;
+      display: block;
+      transition: 0.6s;
+    }
+    .cert-img:hover {
+      transform: scale(1.01);
+      box-shadow: 0 0 120px #7b4dff77;
+    }
+    .cert-img:hover img {
+      transform: scale(1.04);
+    }
+
+    .cert-info {
+      flex: 1 1 280px;
+    }
+    .cert-info h3 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .cert-info p {
+      color: #b4bde0;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .cert-info .badge {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #7b4dff22;
+      padding: 6px 22px;
+      border-radius: 40px;
+      border: 1px solid #7b4dff66;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* ============================================================ */
+    /* WEBSITE 2 — PROJECTS (poster wali)                           */
+    /* ============================================================ */
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 32px;
+      padding: 1.2rem;
+      backdrop-filter: blur(6px);
+      border: 1px solid #ffffff0a;
+      transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      cursor: pointer;
+      box-shadow: 0 10px 40px #00000044;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 32px;
+      padding: 2px;
+      background: linear-gradient(135deg, #7b4dff44, #b08aff22, transparent);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .project-card:hover {
+      transform: translateY(-12px) scale(1.01);
+      box-shadow: 0 20px 80px #7b4dff33, 0 0 60px #7b4dff22;
+      border-color: #7b4dff55;
+    }
+
+    .project-card img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 20px;
+      transition: 0.5s;
+      box-shadow: 0 8px 30px #00000055;
+    }
+    .project-card:hover img {
+      transform: scale(1.02);
+      box-shadow: 0 0 50px #7b4dff44;
+    }
+
+    .project-card .project-label {
+      margin-top: 1rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #d0d8f0;
+    }
+    .project-card .project-label i {
+      color: #7b4dff;
+      transition: 0.3s;
+    }
+    .project-card:hover .project-label i {
+      transform: translateX(6px) scale(1.1);
+      color: #b08aff;
+    }
+
+    /* popup / expand view */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(18px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.4s;
+      padding: 2rem;
+    }
+    .popup-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .popup-content {
+      background: #141824;
+      border-radius: 40px;
+      max-width: 700px;
+      width: 100%;
+      padding: 2rem;
+      border: 1px solid #7b4dff66;
+      box-shadow: 0 0 120px #7b4dff33;
+      transform: scale(0.9) translateY(30px);
+      transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .popup-overlay.active .popup-content {
+      transform: scale(1) translateY(0);
+    }
+    .popup-content img {
+      width: 100%;
+      border-radius: 24px;
+      border: 1px solid #ffffff0a;
+    }
+    .popup-content .close-btn {
+      display: block;
+      margin-top: 1.5rem;
+      margin-left: auto;
+      background: #7b4dff33;
+      border: 1px solid #7b4dff66;
+      color: #fff;
+      padding: 8px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.95rem;
+    }
+    .popup-content .close-btn:hover {
+      background: #7b4dff;
+      box-shadow: 0 0 50px #7b4dff66;
+    }
+
+    /* ----- ANIMATIONS ----- */
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-18px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .delay-1 {
+      animation-delay: 0.1s;
+    }
+    .delay-2 {
+      animation-delay: 0.25s;
+    }
+    .delay-3 {
+      animation-delay: 0.4s;
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 900px) {
+      .intro-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .intro-text p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .nav-links {
+        gap: 1.2rem;
+        justify-content: center;
+        margin-top: 8px;
+      }
+      .section-title {
+        font-size: 2.2rem;
+      }
+      .intro-text h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .navbar {
+        flex-direction: column;
+        align-items: center;
+      }
+      .nav-logo span {
+        font-size: 1.1rem;
+      }
+      .cert-wrapper {
+        flex-direction: column;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* divider */
+    .divider {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #7b4dff44, #b08aff44, transparent);
+      margin: 3rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================ -->
+  <!--  NAVIGATION (shared)                                          -->
+  <!-- ============================================================ -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <!-- left corner circle logo: vfx pix.jpg -->
+      <img src="vfxpixcraft.jpg" alt="VFX Pix Craft" onerror="this.src='https://via.placeholder.com/52/7b4dff/ffffff?text=VP'" />
+      <span>VFXPIXCRAFT</span>
+    </div>
+    <div class="nav-links">
+      <a href="#website1">Intro</a>
+      <a href="#certificate" class="cert-link"><i class="fas fa-certificate" style="margin-right: 6px;"></i>Certificate</a>
+      <a href="#website2">Projects</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!--  WEBSITE 1 — Self Intro + Certificate (poster 2 vali)        -->
+  <!-- ============================================================ -->
+  <section class="section" id="website1">
+    <div class="intro-grid fade-up">
+      <!-- left: photo MV Image 01.jpg -->
+      <div class="intro-img">
+        <img src="MyImage.jpg" alt="Arman Husain" onerror="this.src='https://via.placeholder.com/380/141824/7b4dff?text=ARMAN'" />
+      </div>
+      <!-- right: intro -->
+      <div class="intro-text fade-up delay-1">
+        <h1>Arman <span class="highlight">Husain</span></h1>
+        <div class="tagline"><i class="fas fa-bolt" style="color:#7b4dff;margin-right:8px;"></i>Founder — VFX Pix Craft</div>
+        <p>
+          I run <strong style="color:#b08aff;">VFX Pix Craft</strong> — a creative agency that breathes life into 
+          <strong>posters</strong>, <strong>video edits</strong>, and <strong>websites</strong>. 
+          Every pixel tells a story, every frame hits hard. <br /><br />
+          With a blend of precision and artistry, I turn raw ideas into visuals that 
+          <span style="color:#b08aff;">stand out</span> and <span style="color:#b08aff;">convert</span>.
+        </p>
+        <a href="#certificate" class="btn-glow"><i class="fas fa-arrow-right" style="margin-right:10px;"></i>View Certificate</a>
+      </div>
+    </div>
+
+    <!-- certificate section -->
+    <div class="cert-section glow-box" id="certificate">
+      <div class="cert-wrapper">
+        <div class="cert-img fade-up delay-1">
+          <!-- Gemini certificate image: My certificate 0.1.jpg -->
+          <img src="Mycertificate.jpg" alt="Gemini Certificate" onerror="this.src='https://via.placeholder.com/500x350/141824/7b4dff?text=Gemini+Certificate'" />
+        </div>
+        <div class="cert-info fade-up delay-2">
+          <h3><i class="fas fa-award" style="color:#b08aff;margin-right:12px;"></i>Gemini Certificate</h3>
+          <p>
+            Recognised for excellence in AI-driven design &amp; creative automation. 
+            This credential reflects my deep understanding of next-gen tools and 
+            their application in real-world projects.
+          </p>
+          <div class="badge"><i class="fas fa-check-circle" style="margin-right:8px;color:#7b4dff;"></i>verified · 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================ -->
+  <!--  WEBSITE 2 — Posters / Projects                               -->
+  <!-- ============================================================ -->
+  <section class="section" id="website2">
+    <h2 class="section-title fade-up"><i class="fas fa-images" style="margin-right:16px;color:#7b4dff;"></i>Poster Projects</h2>
+    <p style="color:#b4bde0;margin-bottom:2rem;font-size:1.1rem;fade-up delay-1;">
+      Tap any poster to view in full glory. Each piece is crafted with precision.
+    </p>
+
+    <div class="projects-grid" id="projectGrid">
+      <!-- poster1.jpg to poster5.jpg -->
+      <div class="project-card fade-up delay-1" data-img="poster1.jpg">
+        <img src="poster1.jpg" alt="Poster 1" onerror="this.src='https://via.placeholder.com/300x300/141824/7b4dff?text=Poster+1'" />
+        <div class="project-label">Poster 01 <i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="project-card fade-up delay-2" data-img="poster2.jpg">
+        <img src="poster2.jpg" alt="Poster 2" onerror="this.src='https://via.placeholder.com/300x300/141824/7b4dff?text=Poster+2'" />
+        <div class="project-label">Poster 02 <i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="project-card fade-up delay-3" data-img="poster3.jpg">
+        <img src="poster3.jpg" alt="Poster 3" onerror="this.src='https://via.placeholder.com/300x300/141824/7b4dff?text=Poster+3'" />
+        <div class="project-label">Poster 03 <i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="project-card fade-up delay-1" data-img="poster4.jpg">
+        <img src="poster4.jpg" alt="Poster 4" onerror="this.src='https://via.placeholder.com/300x300/141824/7b4dff?text=Poster+4'" />
+        <div class="project-label">Poster 04 <i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="project-card fade-up delay-2" data-img="poster5.jpg">
+        <img src="poster5.jpg" alt="Poster 5" onerror="this.src='https://via.placeholder.com/300x300/141824/7b4dff?text=Poster+5'" />
+        <div class="project-label">Poster 05 <i class="fas fa-arrow-right"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!--  POPUP (full view)                                            -->
+  <!-- ============================================================ -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content">
+      <img id="popupImg" src="" alt="Poster" />
+      <button class="close-btn" id="closePopup"><i class="fas fa-times" style="margin-right:8px;"></i>Close</button>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!--  JS : popup + animation observer                              -->
+  <!-- ============================================================ -->
+  <script>
+    // ---------- POPUP ----------
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupImg = document.getElementById('popupImg');
+    const closeBtn = document.getElementById('closePopup');
+
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const imgSrc = card.getAttribute('data-img');
+        popupImg.src = imgSrc;
+        popupOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closePopup = () => {
+      popupOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    };
+
+    closeBtn.addEventListener('click', closePopup);
+    popupOverlay.addEventListener('click', (e) => {
+      if (e.target === popupOverlay) closePopup();
+    });
+
+    // ---------- SCROLL ANIMATION (fade-up) ----------
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, { threshold: 0.15 });
+
+    fadeElements.forEach(el => {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+
+    // force run on load for visible items
+    window.addEventListener('load', () => {
+      fadeElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+          el.style.animationPlayState = 'running';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+```
